@@ -13,4 +13,9 @@ const listaDeTimesFindAll = [
   },
 ];
 
-export default listaDeTimesFindAll;
+const timeEspecifico = { id: 3, teamName: 'Botafogo' };
+
+export {
+  listaDeTimesFindAll,
+  timeEspecifico,
+};

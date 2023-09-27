@@ -8,7 +8,7 @@ import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
 import SequelizeTeamModel from '../database/models/TeamModel';
-import listaDeTimesFindAll from '../mocks/teamsMock';
+import { listaDeTimesFindAll, timeEspecifico } from '../mocks/teamsMock';
 
 chai.use(chaiHttp);
 
@@ -29,16 +29,25 @@ describe('Verifica as rotas de /teams', () => {
     expect(response.body).to.be.deep.equal(listaDeTimesFindAll);
   });
 
-  it('Verifica se um time específico é retornado corretamente', async function () {
-    sinon.stub(SequelizeTeamModel, 'findAll').resolves([
-      SequelizeTeamModel.build({ "id": 1, "teamName": "Cruzeiro"}),
-      SequelizeTeamModel.build({ "id": 2, "teamName": "Bahia"}),
-      SequelizeTeamModel.build({ "id": 3, "teamName": "Botafogo"}),
-    ]);
+  // it('Verifica se um time específico é retornado corretamente', async function () {
+  //   sinon.stub(SequelizeTeamModel, 'findByPk').resolves(
+  //     SequelizeTeamModel.build({ "id": 3, "teamName": "Botafogo"}),
+  //   );
 
-    const response = await chai.request(app).get('/teams');
+  //   const response = await chai.request(app).get('/teams/3');
 
-    expect(response.status).to.be.equal(200);
-    expect(response.body).to.be.deep.equal(listaDeTimesFindAll);
-  });
+  //   expect(response.status).to.be.equal(200);
+  //   expect(response.body).to.be.deep.equal(timeEspecifico);
+  // });
+
+  // it('Verifica se um time específico é retornado corretamente', async function () {
+  //   sinon.stub(SequelizeTeamModel, 'findByPk').resolves(
+  //     SequelizeTeamModel.build({ "id": 3, "teamName": "Botafogo"}),
+  //   );
+
+  //   const response = await chai.request(app).get('/teams/3');
+
+  //   expect(response.status).to.be.equal(200);
+  //   expect(response.body).to.be.deep.equal(timeEspecifico);
+  // });
 });

@@ -11,6 +11,19 @@ async function getTeams(): Promise<ServiceResponse<TeamsType[]>> {
   };
 }
 
+async function getOneTeam(id: number): Promise<ServiceResponse<TeamsType>> {
+  const team = await SequelizeTeamModel.findByPk(id);
+
+  if (team) {
+    return {
+      status: 200,
+      data: team.dataValues,
+    };
+  }
+  return { status: 401, data: { message: 'Time não encontrado' } };
+}
+
 export default {
   getTeams,
+  getOneTeam,
 };
