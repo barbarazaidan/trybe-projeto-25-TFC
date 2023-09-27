@@ -29,25 +29,23 @@ describe('Verifica as rotas de /teams', () => {
     expect(response.body).to.be.deep.equal(listaDeTimesFindAll);
   });
 
-  // it('Verifica se um time específico é retornado corretamente', async function () {
-  //   sinon.stub(SequelizeTeamModel, 'findByPk').resolves(
-  //     SequelizeTeamModel.build({ "id": 3, "teamName": "Botafogo"}),
-  //   );
+  it('Verifica se um time específico é retornado corretamente', async function () {
+    sinon.stub(SequelizeTeamModel, 'findByPk').resolves(
+      SequelizeTeamModel.build({ "id": 3, "teamName": "Botafogo"}),
+    );
 
-  //   const response = await chai.request(app).get('/teams/3');
+    const response = await chai.request(app).get('/teams/3');
 
-  //   expect(response.status).to.be.equal(200);
-  //   expect(response.body).to.be.deep.equal(timeEspecifico);
-  // });
+    expect(response.status).to.be.equal(200);
+    expect(response.body).to.be.deep.equal(timeEspecifico);
+  });
 
-  // it('Verifica se um time específico é retornado corretamente', async function () {
-  //   sinon.stub(SequelizeTeamModel, 'findByPk').resolves(
-  //     SequelizeTeamModel.build({ "id": 3, "teamName": "Botafogo"}),
-  //   );
+  it('Verifica se uma mensagem de erro é retornada em casa de busca de um id incorreto', async function () {
+    sinon.stub(SequelizeTeamModel, 'findByPk').resolves(null);
 
-  //   const response = await chai.request(app).get('/teams/3');
+    const response = await chai.request(app).get('/teams/99');
 
-  //   expect(response.status).to.be.equal(200);
-  //   expect(response.body).to.be.deep.equal(timeEspecifico);
-  // });
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.be.deep.equal({ message: 'Time não encontrado' });
+  });
 });
