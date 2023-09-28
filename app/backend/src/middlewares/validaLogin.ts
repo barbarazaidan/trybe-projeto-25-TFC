@@ -15,6 +15,10 @@ async function validaLogin(req: Request, res: Response, next: NextFunction) {
   if (!validaEmail(email)) {
     return res.status(401).json({ message: 'Invalid email or password' });
   }
+
+  if (password.length < 6) {
+    return res.status(401).json({ message: 'Invalid email or password' });
+  }
   next();
 }
 
