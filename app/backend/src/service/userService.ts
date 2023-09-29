@@ -5,6 +5,7 @@ import geraToken from '../utils/geraToken';
 
 async function doLogin(email: string, password: string) {
   const user = await SequelizeUserModel.findOne({ where: { email } });
+  // console.log(user);
   if (!user) {
     return { status: 401, data: { message: 'Invalid email or password' } };
   }
