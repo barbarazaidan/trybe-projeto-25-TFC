@@ -10,25 +10,42 @@ export default {
         autoIncrement: true,
         primaryKey: true,
       },
-      username: {
-        type: DataTypes.STRING,
+      homeTeamId: {
+        type: DataTypes.NUMBER,
         allowNull: false,
+        field: 'home_team_id',
+        references: {
+            model: 'teams', 
+            key: 'id'
+        },
       },
-        role: {
-            type: DataTypes.STRING,
-            allowNull: false
+      homeTeamGoals: {
+        type: DataTypes.NUMBER,
+        allowNull: false,
+        field: 'home_team_goals',
+      },
+      awayTeamId: {
+        type: DataTypes.NUMBER,
+        allowNull: false,
+        field: 'away_team_id',
+        references: {
+            model: 'teams', 
+            key: 'id'
         },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
+      },
+      awayTeamGoals: {
+        type: DataTypes.NUMBER,
+        allowNull: false,
+        field: 'away_team_goals',
+      },
+      inProgress: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        field: 'in_progress',
+      },
     });
   },
   down(queryInterface: QueryInterface) {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('matches');
   },
 };
