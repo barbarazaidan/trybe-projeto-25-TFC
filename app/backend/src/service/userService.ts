@@ -5,8 +5,6 @@ import geraToken from '../utils/geraToken';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
 import RoleType from '../Interfaces/Role';
 
-
-
 async function doLogin(email: string, password: string) {
   const user = await SequelizeUserModel.findOne({ where: { email } });
   // console.log(user);

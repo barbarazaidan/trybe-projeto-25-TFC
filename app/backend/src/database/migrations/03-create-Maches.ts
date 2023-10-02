@@ -1,9 +1,9 @@
 import { Model, QueryInterface, DataTypes } from 'sequelize';
-import UserType from '../../Interfaces/User';
+import MatchType from '../../Interfaces/Matches';
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.createTable<Model<UserType>>('matches', {
+    return queryInterface.createTable<Model<MatchType>>('matches', {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
