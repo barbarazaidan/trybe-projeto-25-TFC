@@ -20,6 +20,16 @@ async function doLogin(email: string, password: string) {
   return { status: 200, data: { token } };
 }
 
+async function getRole(id: number) {
+  const userData = await SequelizeUserModel.findOne({ where: { id } });
+  // console.log(userData);
+  if (!userData) {
+    return { status: 404, data: { message: 'User not found' } };
+  }
+  return { status: 200, data: userData.dataValues.role };
+}
+
 export default {
   doLogin,
+  getRole,
 };
