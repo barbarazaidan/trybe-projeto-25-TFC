@@ -2,6 +2,10 @@ import * as bcrypt from 'bcryptjs';
 
 import SequelizeUserModel from '../database/models/UserModel';
 import geraToken from '../utils/geraToken';
+import { ServiceResponse } from '../Interfaces/ServiceResponse';
+import RoleType from '../Interfaces/Role';
+
+
 
 async function doLogin(email: string, password: string) {
   const user = await SequelizeUserModel.findOne({ where: { email } });
@@ -20,13 +24,14 @@ async function doLogin(email: string, password: string) {
   return { status: 200, data: { token } };
 }
 
-async function getRole(id: number) {
+async function getRole(id: number) : Promise<ServiceResponse<RoleType>> {
   const userData = await SequelizeUserModel.findOne({ where: { id } });
   // console.log(userData);
   if (!userData) {
     return { status: 404, data: { message: 'User not found' } };
   }
-  return { status: 200, data: userData.dataValues.role };
+  const { role } = userData.dataValues;
+  return { status: 200, data: { role } };
 }
 
 export default {
