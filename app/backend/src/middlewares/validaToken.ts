@@ -22,13 +22,14 @@ const validaToken = (req: Request, res: Response, next: NextFunction) => {
     const secret = process.env.JWT_SECRET || 'segredo';
 
     const decodedToken = jwt.verify(usableToken, secret);
+
     // coloquei as informações do usuário ({ id: 2, role: 'user', iat: 1696088967 }) dentro de uma nova chave criada no res e que chamei de payload
     res.locals.payload = decodedToken;
     // console.log(res.locals.payload);
 
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'Token must be a valid toke' });
+    return res.status(401).json({ message: 'Token must be a valid token' });
   }
 };
 
