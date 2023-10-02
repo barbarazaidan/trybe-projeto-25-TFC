@@ -23,7 +23,7 @@ describe('Verifica a rota de /login/role', () => {
     const response = (await chai.request(app).get('/login/role').set('authorization', tokenValido));
 
     expect(response.status).to.be.equal(200);
-    expect(response.body).to.be.equal({ role: 'user' });
+    expect(response.body).to.be.deep.equal({ role: 'user' });
   });
 
   it('Verifica se uma mensagem de erro é retornada ao entrar na /login/role usando um token com um email inválido', async function () {
