@@ -21,6 +21,3 @@ export default {
     return queryInterface.dropTable('teams');
   },
 };
-
-// 700001757739 - letícia 300001327522 (prazo da reclamação 5 a 10 dias)
-// 20231004034025362 JOABSON
