@@ -34,7 +34,20 @@ async function getMatchesInProgress(inProgress: boolean): Promise<ServiceRespons
   };
 }
 
+async function finishMatch(id: string): Promise<ServiceResponse<MatchType>> {
+  const match = await SequelizeMatchModel.findByPk(id);
+  if (!match) {
+    return { status: 404, data: { message: 'Partida não encontrada' } };
+  }
+  if (match.inProgress === false) {
+    return { status: 409, data: { message: 'Partida já finalizada' } };
+  }
+  await match.update({ inProgress: false });
+  return { status: 200, data: { message: 'Finished' } };
+}
+
 export default {
   getMatches,
   getMatchesInProgress,
+  finishMatch,
 };

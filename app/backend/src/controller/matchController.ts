@@ -26,6 +26,14 @@ async function getMatches(req: Request, res: Response): Promise<void> {
   }
 }
 
+async function finishMatch(req: Request, res: Response): Promise<void> {
+  const { id } = req.params;
+  // console.log(typeof id);
+  const serviceResponse = await matchService.finishMatch(id);
+  res.status(serviceResponse.status).json(serviceResponse.data);
+}
+
 export default {
   getMatches,
+  finishMatch,
 };
