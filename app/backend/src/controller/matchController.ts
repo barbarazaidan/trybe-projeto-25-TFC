@@ -40,8 +40,18 @@ async function updatedMatch(req: Request, res: Response): Promise<void> {
   res.status(serviceResponse.status).json(serviceResponse.data);
 }
 
+async function newMatch(req: Request, res: Response): Promise<void> {
+  const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+  const homeTeam = { homeTeamId, homeTeamGoals };
+  const awayTeam = { awayTeamId, awayTeamGoals };
+  const serviceResponse = await matchService
+    .newMatch(homeTeam, awayTeam);
+  res.status(serviceResponse.status).json(serviceResponse.data);
+}
+
 export default {
   getMatches,
   finishMatch,
   updatedMatch,
+  newMatch,
 };

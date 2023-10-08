@@ -1,7 +1,7 @@
 import SequelizeMatchModel from '../database/models/MatchModel';
 import SequelizeTeamModel from '../database/models/TeamModel';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
-import MatchType from '../Interfaces/Matches';
+import MatchType, { AwayTeamType, HomeTeamType } from '../Interfaces/Matches';
 
 async function getMatches(): Promise<ServiceResponse<MatchType[]>> {
   const matches = await SequelizeMatchModel.findAll({
@@ -59,9 +59,29 @@ async function updatedMatch(id: string, homeTeamGoals: number, awayTeamGoals: nu
   return { status: 200, data: { message: 'Updated' } };
 }
 
+async function newMatch(homeTeam: HomeTeamType, awayTeam: AwayTeamType)
+  : Promise<ServiceResponse<MatchType>> {
+  const { homeTeamId, homeTeamGoals } = homeTeam;
+  const { awayTeamId, awayTeamGoals } = awayTeam;
+  const homeTeamBD = await SequelizeTeamModel.findByPk(homeTeamId);
+  const awayTeamBD = await SequelizeTeamModel.findByPk(awayTeamId);
+  if (!homeTeamBD || !awayTeamBD) {
+    return { status: 404, data: { message: 'Time não encontrado' } };
+  }
+  const match = await SequelizeMatchModel.create({
+    homeTeamId,
+    homeTeamGoals,
+    awayTeamId,
+    awayTeamGoals,
+    inProgress: true,
+  });
+  return { status: 201, data: match };
+}
+
 export default {
   getMatches,
   getMatchesInProgress,
   finishMatch,
   updatedMatch,
+  newMatch,
 };

@@ -6,3 +6,13 @@ export default interface MatchType {
   awayTeamGoals: number,
   inProgress: boolean,
 }
+
+export interface HomeTeamType {
+  homeTeamId: number,
+  homeTeamGoals: number,
+}
+
+export interface AwayTeamType {
+  awayTeamId: number,
+  awayTeamGoals: number,
+}
