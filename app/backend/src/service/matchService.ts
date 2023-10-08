@@ -65,15 +65,20 @@ async function newMatch(homeTeam: HomeTeamType, awayTeam: AwayTeamType)
   const { awayTeamId, awayTeamGoals } = awayTeam;
   const homeTeamBD = await SequelizeTeamModel.findByPk(homeTeamId);
   const awayTeamBD = await SequelizeTeamModel.findByPk(awayTeamId);
-  if (!homeTeamBD || !awayTeamBD) {
-    return { status: 404, data: { message: 'Time não encontrado' } };
+
+  if (homeTeamId === awayTeamId) {
+    return {
+      status: 422,
+      data: { message: 'It is not possible to create a match with two equal teams' },
+    };
   }
+
+  if (!homeTeamBD || !awayTeamBD) {
+    return { status: 404, data: { message: 'There is no team with such id!' } };
+  }
+
   const match = await SequelizeMatchModel.create({
-    homeTeamId,
-    homeTeamGoals,
-    awayTeamId,
-    awayTeamGoals,
-    inProgress: true,
+    homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress: true,
   });
   return { status: 201, data: match };
 }
