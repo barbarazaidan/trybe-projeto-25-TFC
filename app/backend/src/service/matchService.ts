@@ -46,8 +46,22 @@ async function finishMatch(id: string): Promise<ServiceResponse<MatchType>> {
   return { status: 200, data: { message: 'Finished' } };
 }
 
+async function updatedMatch(id: string, homeTeamGoals: number, awayTeamGoals: number)
+  : Promise<ServiceResponse<MatchType>> {
+  const match = await SequelizeMatchModel.findByPk(id);
+  if (!match) {
+    return { status: 404, data: { message: 'Partida não encontrada' } };
+  }
+  if (match.inProgress === false) {
+    return { status: 409, data: { message: 'Partida já finalizada' } };
+  }
+  await match.update({ homeTeamGoals, awayTeamGoals });
+  return { status: 200, data: { message: 'Updated' } };
+}
+
 export default {
   getMatches,
   getMatchesInProgress,
   finishMatch,
+  updatedMatch,
 };

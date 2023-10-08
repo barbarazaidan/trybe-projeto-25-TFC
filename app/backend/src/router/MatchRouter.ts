@@ -6,6 +6,7 @@ import validaToken from '../middlewares/validaToken';
 const MatchesRouter = Router();
 
 MatchesRouter.get('/', matchController.getMatches);
+MatchesRouter.patch('/:id', validaToken, matchController.updatedMatch);
 MatchesRouter.patch('/:id/finish', validaToken, matchController.finishMatch);
 
 export default MatchesRouter;

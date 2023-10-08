@@ -33,7 +33,15 @@ async function finishMatch(req: Request, res: Response): Promise<void> {
   res.status(serviceResponse.status).json(serviceResponse.data);
 }
 
+async function updatedMatch(req: Request, res: Response): Promise<void> {
+  const { id } = req.params;
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+  const serviceResponse = await matchService.updatedMatch(id, homeTeamGoals, awayTeamGoals);
+  res.status(serviceResponse.status).json(serviceResponse.data);
+}
+
 export default {
   getMatches,
   finishMatch,
+  updatedMatch,
 };
