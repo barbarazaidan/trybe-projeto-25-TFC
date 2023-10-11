@@ -10,6 +10,8 @@ async function getMatches(): Promise<ServiceResponse<MatchType[]>> {
       { model: SequelizeTeamModel, as: 'awayTeam', attributes: ['teamName'] },
     ],
   });
+  // console.log(matches);
+
   const matchesApenasComDataValues = matches.map((match) => match.dataValues);
   return {
     status: 200,

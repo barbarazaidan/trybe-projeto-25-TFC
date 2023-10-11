@@ -6,7 +6,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 
 import SequelizeUserModel from '../database/models/UserModel';
-import { bodyComEmailInexistente, bodyComEmailInvalido, bodyComPasswordInexistente, bodyComSenhaInvalida, bodySemEmail, bodySemSenha, bodyValido, user } from '../mocks/userMock';
+import { bodyComEmailInexistente, user } from '../mocks/userMock';
 
 chai.use(chaiHttp);
 
