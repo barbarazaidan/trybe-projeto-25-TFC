@@ -2,7 +2,7 @@ import { TeamPerformanceType } from '../Interfaces/Teams';
 import SequelizeMatchModel from '../database/models/MatchModel';
 import SequelizeTeamModel from '../database/models/TeamModel';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
-import MatchType, { AwayTeamType, HomeTeamType, MatchResultType } from '../Interfaces/Matches';
+import { MatchResultType } from '../Interfaces/Matches';
 
 async function getMatchesEnded(inProgress: boolean): Promise<MatchResultType[]> {
   const matches = await SequelizeMatchModel.findAll({
