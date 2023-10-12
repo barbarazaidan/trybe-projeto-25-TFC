@@ -57,7 +57,7 @@ function teamsPontuationByMatch(matchesEnded: MatchResultType[]): TeamPerformanc
       totalGames: 1,
       totalVictories: homeTeamGoals > awayTeamGoals ? 1 : 0,
       totalDraws: homeTeamGoals === awayTeamGoals ? 1 : 0,
-      totalDefeats: homeTeamGoals < awayTeamGoals ? 1 : 0,
+      totalLosses: homeTeamGoals < awayTeamGoals ? 1 : 0,
       goalsFavor: homeTeamGoals,
       goalsOwn: awayTeamGoals,
     };
