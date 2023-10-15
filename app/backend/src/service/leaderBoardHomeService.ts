@@ -1,4 +1,4 @@
-import { TeamPerformanceType } from '../Interfaces/Teams';
+import { TeamPerformanceByMatchType, TeamPerformanceType } from '../Interfaces/Teams';
 import SequelizeMatchModel from '../database/models/MatchModel';
 import SequelizeTeamModel from '../database/models/TeamModel';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
@@ -46,7 +46,7 @@ function calculateTotalPoints(homeTeamGoals: number, awayTeamGoals: number): num
   return 0;
 }
 
-function teamsPontuationByMatch(matchesEnded: MatchResultType[]): TeamPerformanceType[] {
+function teamsPontuationByMatch(matchesEnded: MatchResultType[]): TeamPerformanceByMatchType[] {
   const lista = matchesEnded.map((match) => {
     const { homeTeam, homeTeamGoals, awayTeamGoals } = match;
     const name = homeTeam.teamName;
@@ -65,8 +65,8 @@ function teamsPontuationByMatch(matchesEnded: MatchResultType[]): TeamPerformanc
   return lista;
 }
 
-function calculoDaPontuacaoPorTime(lista: TeamPerformanceType[], name: string)
-  : TeamPerformanceType {
+function calculoDaPontuacaoPorTime(lista: TeamPerformanceByMatchType[], name: string)
+  : TeamPerformanceByMatchType {
   const timesIguais = lista.filter((elemento) => elemento.name === name);
   const somatorioPorTime = timesIguais.reduce((acc, elemento) => {
     const {
@@ -86,8 +86,8 @@ function calculoDaPontuacaoPorTime(lista: TeamPerformanceType[], name: string)
   return somatorioPorTime;
 }
 
-function teamsRanking(lista: TeamPerformanceType[]): TeamPerformanceType[] {
-  const listaFinal: TeamPerformanceType[] = [];
+function teamsRanking(lista: TeamPerformanceByMatchType[]): TeamPerformanceByMatchType[] {
+  const listaFinal: TeamPerformanceByMatchType[] = [];
   lista.forEach((equipe) => {
     const { name } = equipe;
     const somatorioPorTime = calculoDaPontuacaoPorTime(lista, name);
@@ -98,10 +98,42 @@ function teamsRanking(lista: TeamPerformanceType[]): TeamPerformanceType[] {
   return listaFinal;
 }
 
-// function ordenacaoPorPontuacao(ranking: TeamPerformanceType[]): TeamPerformanceType[] {
-//   const rankingOrdenado = ranking.sort((a, b) => (a -b));
-//   return rankingOrdenado;
-// }
+function teamsRankingFinal(lista: TeamPerformanceByMatchType[]): TeamPerformanceType[] {
+  const rankingFinal = lista.map((time) => {
+    const {
+      name, totalPoints, totalGames, totalVictories, totalDraws, totalLosses, goalsFavor, goalsOwn,
+    } = time;
+    return {
+      name,
+      totalPoints,
+      totalGames,
+      totalVictories,
+      totalDraws,
+      totalLosses,
+      goalsFavor,
+      goalsOwn,
+      goalsBalance: goalsFavor - goalsOwn,
+      efficiency: ((totalPoints / (totalGames * 3)) * 100).toFixed(2),
+    };
+  });
+  return rankingFinal;
+}
+
+function rankingOrdenado(rankingFinal: TeamPerformanceType[]): TeamPerformanceType[] {
+  const resultadoRankingOrdenado = rankingFinal.sort((a, b) => {
+    if (a.totalPoints !== b.totalPoints) {
+      return b.totalPoints - a.totalPoints;
+    }
+    if (a.totalVictories !== b.totalVictories) {
+      return b.totalVictories - a.totalVictories;
+    }
+    if (a.goalsBalance !== b.goalsBalance) {
+      return b.goalsBalance - a.goalsBalance;
+    }
+    return b.goalsFavor - a.goalsFavor;
+  });
+  return resultadoRankingOrdenado;
+}
 
 async function getLeaderHome(): Promise<ServiceResponse<TeamPerformanceType[]>> {
   const inProgress = false; // vou rankear apenas as partidas que já acabaram
@@ -113,13 +145,18 @@ async function getLeaderHome(): Promise<ServiceResponse<TeamPerformanceType[]>> 
   // retorna uma lista com a pontuação de cada time por partida
   const teamsWithPontuationByMatch = teamsPontuationByMatch(formatedMatches);
 
+  // retorna a pontuação de cada time somando todas as partidas, mas sem as propriedades goalsBalance e efficiency
   const ranking = teamsRanking(teamsWithPontuationByMatch);
 
-  // const rankingFinal = ordenacaoPorPontuacao(ranking);
+  // retorna a pontuação de cada time somando todas as partidas, com as propriedades goalsBalance e efficiency
+  const rankingFinal = teamsRankingFinal(ranking);
+
+  // retorna o ranking final ordenado de forma decrescente com base no total de pontos (desempate: vitórias, saldo de gols e gols a favor)
+  const rankingFinalOrdenado = rankingOrdenado(rankingFinal);
 
   return {
     status: 200,
-    data: ranking,
+    data: rankingFinalOrdenado,
   };
 }
 

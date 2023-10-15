@@ -3,6 +3,17 @@ export default interface TeamsType {
   teamName: string,
 }
 
+export interface TeamPerformanceByMatchType {
+  name: string,
+  totalPoints: number,
+  totalGames: number,
+  totalVictories: number,
+  totalDraws: number,
+  totalLosses: number,
+  goalsFavor: number,
+  goalsOwn: number,
+}
+
 export interface TeamPerformanceType {
   name: string,
   totalPoints: number,
@@ -12,6 +23,6 @@ export interface TeamPerformanceType {
   totalLosses: number,
   goalsFavor: number,
   goalsOwn: number,
-  // goalsTotal: number,
-  // efficiency: number,
+  goalsBalance: number,
+  efficiency: string,
 }
