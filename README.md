@@ -264,6 +264,9 @@ Confira os requisitos exigidos pela Trybe (texto extraído dos readme oficial da
 
 > Será validado que a página apresentará todos os dados de partidas sem nenhum filtro.
 
+</p>
+</details>
+
 ---
 
 **16 - Desenvolva o endpoint `/matches` de forma que seja possível filtrar somente as partidas em andamento, e também filtrar somente as partidas finalizadas, na tela de partidas do front-end**
