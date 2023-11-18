@@ -480,7 +480,7 @@ Confira os requisitos exigidos pela Trybe (texto extraído dos readme oficial da
 ---
 
 <details>
-  <summary><strong> REGRAS DE CLASSIFICAÇÃO </strong></summary>
+  <summary><strong> REGRAS DE CLASSIFICAÇÃO: </strong></summary>
 
 > Para construir a classificação dos times, devem ser seguidas as seguintes regras de negócios:
 
