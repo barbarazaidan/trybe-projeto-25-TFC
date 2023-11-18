@@ -112,7 +112,7 @@ Confira os requisitos exigidos pela Trybe (texto extraído dos readme oficial da
 ---
 
 <details>
-  <summary><strong> Para os requisitos 6 até 12: </strong></summary>
+  <summary><strong> PARA OS REQUISITOS 6 ATÉ 12: </strong></summary>
 
 > A rota utilizada deve ser (`/login`);
 
@@ -263,45 +263,6 @@ Confira os requisitos exigidos pela Trybe (texto extraído dos readme oficial da
 > A rota deve ser um `GET` e retorna uma lista de partidas;
 
 > Será validado que a página apresentará todos os dados de partidas sem nenhum filtro.
-
-    Exemplo de retorno:
-
-    ```json
-    [
-      {
-        "id": 1,
-        "homeTeamId": 16,
-        "homeTeamGoals": 1,
-        "awayTeamId": 8,
-        "awayTeamGoals": 1,
-        "inProgress": false,
-        "homeTeam": {
-          "teamName": "São Paulo"
-        },
-        "awayTeam": {
-          "teamName": "Grêmio"
-        }
-      },
-      ...
-      {
-        "id": 41,
-        "homeTeamId": 16,
-        "homeTeamGoals": 2,
-        "awayTeamId": 9,
-        "awayTeamGoals": 0,
-        "inProgress": true,
-        "homeTeam": {
-          "teamName": "São Paulo"
-        },
-        "awayTeam": {
-          "teamName": "Internacional"
-        }
-      }
-    ]
-    ```
-
-</p>
-</details>
 
 ---
 
@@ -519,7 +480,7 @@ Confira os requisitos exigidos pela Trybe (texto extraído dos readme oficial da
 ---
 
 <details>
-  <summary><strong> Regras de classificação </strong></summary>
+  <summary><strong> REGRAS DE CLASSIFICAÇÃO </strong></summary>
 
 > Para construir a classificação dos times, devem ser seguidas as seguintes regras de negócios:
 
@@ -560,6 +521,8 @@ Confira os requisitos exigidos pela Trybe (texto extraído dos readme oficial da
   - 3º Gols a favor;
 
 </details>
+
+---
 
 **22 - (`Bônus`; `TDD`) Desenvolva testes que cubram no mínimo 80 por cento dos arquivos em `/app/backend/src`, com um mínimo de 100 linhas cobertas**
 
